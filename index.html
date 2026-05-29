@@ -805,93 +805,19 @@
       <!-- ── MID COLUMN ── -->
       <div class="col-mid">
 
-        <!-- 팀 xG 현황 -->
+        <!-- EPL 순위표 -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title"><span class="dot"></span>팀 xG 현황 — EPL</div>
-            <a href="#" class="card-link">전체 리그 ›</a>
+            <div class="card-title"><span class="dot"></span>EPL 순위표</div>
+            <a href="#" class="card-link">전체 ›</a>
           </div>
 
-          <div style="display:grid;grid-template-columns:20px 1fr 56px 56px 80px;gap:0 8px;font-size:10px;color:#9ca3af;font-weight:600;padding:8px 14px 6px;border-bottom:1px solid #f0f0f0">
-            <span>#</span><span>팀</span><span style="color:#22c55e">xG</span><span style="color:#ef4444">xGA</span><span></span>
+          <div style="display:grid;grid-template-columns:22px 1fr 26px 26px 26px 36px 76px;gap:0 5px;font-size:10px;color:#9ca3af;font-weight:600;padding:8px 14px 6px;border-bottom:1px solid #f0f0f0">
+            <span>#</span><span>팀</span><span style="text-align:center">승</span><span style="text-align:center">무</span><span style="text-align:center">패</span><span style="color:#22c55e;text-align:center">점</span><span>폼</span>
           </div>
 
-          <div class="xg-row">
-            <span class="xg-rank">1</span>
-            <span class="xg-team">맨체스터 시티</span>
-            <span class="xg-val xg-green">68.4</span>
-            <span class="xg-val xg-red">28.1</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:100%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:41%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xg-row">
-            <span class="xg-rank">2</span>
-            <span class="xg-team">아스날</span>
-            <span class="xg-val xg-green">64.2</span>
-            <span class="xg-val xg-red">24.3</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:94%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:35%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xg-row">
-            <span class="xg-rank">3</span>
-            <span class="xg-team">리버풀</span>
-            <span class="xg-val xg-green">61.8</span>
-            <span class="xg-val xg-red">30.2</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:90%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:44%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xg-row">
-            <span class="xg-rank">4</span>
-            <span class="xg-team">첼시</span>
-            <span class="xg-val xg-green">52.1</span>
-            <span class="xg-val xg-red">38.4</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:76%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:56%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xg-row">
-            <span class="xg-rank">5</span>
-            <span class="xg-team">토트넘</span>
-            <span class="xg-val xg-green">49.3</span>
-            <span class="xg-val xg-red">42.1</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:72%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:62%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="xg-row">
-            <span class="xg-rank">6</span>
-            <span class="xg-team">뉴캐슬</span>
-            <span class="xg-val xg-green">46.8</span>
-            <span class="xg-val xg-red">40.3</span>
-            <div>
-              <div style="display:flex;gap:2px;align-items:center">
-                <div style="background:#22c55e;height:5px;border-radius:2px;width:68%"></div>
-                <div style="background:#ef4444;height:5px;border-radius:2px;width:59%"></div>
-              </div>
-            </div>
+          <div id="standings-body">
+            <div style="padding:24px 14px;text-align:center;color:#9ca3af;font-size:12px">⏳ 데이터 불러오는 중...</div>
           </div>
         </div>
 
@@ -930,52 +856,19 @@
             <span class="live-hdr-badge"><span class="live-dot"></span>LIVE</span>
           </div>
 
-          <div class="match-row">
-            <div class="match-league">EPL 38R</div>
-            <div class="match-score">
-              <div class="match-teams">
-                <span>맨시티</span>
-                <span class="score-val">2 - 1</span>
-                <span>아스날</span>
-              </div>
-              <span class="time-badge badge-live">74'</span>
-            </div>
+          <div id="livescores-body">
+            <div style="padding:24px 14px;text-align:center;color:#9ca3af;font-size:12px">⏳ 데이터 불러오는 중...</div>
           </div>
+        </div>
 
-          <div class="match-row">
-            <div class="match-league">라리가 38R</div>
-            <div class="match-score">
-              <div class="match-teams">
-                <span>바르셀로나</span>
-                <span class="score-val">1 - 1</span>
-                <span>아틀레티코</span>
-              </div>
-              <span class="time-badge badge-live">63'</span>
-            </div>
+        <!-- 챔피언스리그 최근 경기 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>챔피언스리그</div>
+            <span style="font-size:10px;color:#9ca3af;font-weight:600">UCL</span>
           </div>
-
-          <div class="match-row">
-            <div class="match-league">분데스리가 34R</div>
-            <div class="match-score">
-              <div class="match-teams">
-                <span>바이에른</span>
-                <span class="score-val">3 - 1</span>
-                <span>도르트문트</span>
-              </div>
-              <span class="time-badge badge-end">종료</span>
-            </div>
-          </div>
-
-          <div class="match-row">
-            <div class="match-league">세리에A 38R</div>
-            <div class="match-score">
-              <div class="match-teams">
-                <span>인터밀란</span>
-                <span class="score-val" style="font-size:12px;color:#9ca3af">vs</span>
-                <span>AC밀란</span>
-              </div>
-              <span class="time-badge badge-soon">22:45</span>
-            </div>
+          <div id="cl-matches-body">
+            <div style="padding:24px 14px;text-align:center;color:#9ca3af;font-size:12px">⏳ 데이터 불러오는 중...</div>
           </div>
         </div>
 
@@ -1106,6 +999,154 @@
 <script>
   /* API Key — 사용 전 여기에 입력 */
   const API_KEY = '';
+
+  /* ── football-data.org API ── */
+  const FD_KEY = 'a80425ac486b4e7d94deb3ed227f030c';
+  const FD_BASE = 'https://api.football-data.org/v4';
+
+  const TEAM_KR = {
+    'Arsenal FC': '아스날', 'Chelsea FC': '첼시', 'Liverpool FC': '리버풀',
+    'Manchester City FC': '맨체스터 시티', 'Manchester United FC': '맨유',
+    'Tottenham Hotspur FC': '토트넘', 'Newcastle United FC': '뉴캐슬',
+    'Aston Villa FC': '아스톤 빌라', 'West Ham United FC': '웨스트햄',
+    'Brighton & Hove Albion FC': '브라이튼', 'Fulham FC': '풀럼',
+    'Brentford FC': '브렌트퍼드', 'Crystal Palace FC': '크리스탈 팰리스',
+    'Everton FC': '에버튼', 'Nottingham Forest FC': '노팅엄',
+    'Wolverhampton Wanderers FC': '울버햄튼', 'AFC Bournemouth': '본머스',
+    'Luton Town FC': '루턴', 'Sheffield United FC': '셰필드 유나이티드',
+    'Burnley FC': '번리', 'Leicester City FC': '레스터', 'Ipswich Town FC': '입스위치',
+    'Southampton FC': '사우샘프턴',
+    'Real Madrid CF': '레알 마드리드', 'FC Barcelona': '바르셀로나',
+    'FC Bayern München': '바이에른', 'Borussia Dortmund': '도르트문트',
+    'Paris Saint-Germain FC': 'PSG', 'FC Internazionale Milano': '인터밀란',
+    'AC Milan': 'AC밀란', 'Club Atlético de Madrid': '아틀레티코',
+  };
+
+  function kr(name) { return TEAM_KR[name] || name; }
+
+  function formBadges(form) {
+    if (!form) return '';
+    return form.split('').slice(-5).map(r => {
+      const c = { W: '#22c55e', D: '#f59e0b', L: '#ef4444' }[r] || '#e5e7eb';
+      return `<span style="display:inline-block;width:13px;height:13px;border-radius:3px;background:${c};color:#fff;font-size:8px;font-weight:700;line-height:13px;text-align:center">${r}</span>`;
+    }).join('');
+  }
+
+  /* EPL 순위표 */
+  async function loadStandings() {
+    const el = document.getElementById('standings-body');
+    try {
+      const res = await fetch(`${FD_BASE}/competitions/PL/standings`, {
+        headers: { 'X-Auth-Token': FD_KEY }
+      });
+      if (!res.ok) throw new Error(res.status);
+      const { standings } = await res.json();
+      const table = standings[0].table;
+      el.innerHTML = table.slice(0, 10).map(r => `
+        <div class="xg-row" style="grid-template-columns:22px 1fr 26px 26px 26px 36px 76px;gap:0 5px">
+          <span class="xg-rank">${r.position}</span>
+          <span class="xg-team" style="font-size:11px">${kr(r.team.name)}</span>
+          <span style="font-size:11px;color:#6b7280;text-align:center">${r.won}</span>
+          <span style="font-size:11px;color:#6b7280;text-align:center">${r.draw}</span>
+          <span style="font-size:11px;color:#6b7280;text-align:center">${r.lost}</span>
+          <span class="xg-val xg-green" style="text-align:center">${r.points}</span>
+          <div style="display:flex;gap:2px;align-items:center">${formBadges(r.form)}</div>
+        </div>`).join('');
+    } catch (e) {
+      el.innerHTML = '<div style="padding:12px 14px;text-align:center;color:#9ca3af;font-size:11px">데이터를 불러올 수 없습니다</div>';
+      console.warn('EPL standings 오류:', e);
+    }
+  }
+
+  /* EPL 최근 경기 + 예정 경기 */
+  async function loadMatches() {
+    const el = document.getElementById('livescores-body');
+    const fallback = `
+      <div class="match-row"><div class="match-league">EPL</div><div class="match-score"><div class="match-teams"><span>맨시티</span><span class="score-val">2 - 1</span><span>아스날</span></div><span class="time-badge badge-end">종료</span></div></div>
+      <div class="match-row"><div class="match-league">EPL</div><div class="match-score"><div class="match-teams"><span>리버풀</span><span class="score-val">3 - 0</span><span>첼시</span></div><span class="time-badge badge-end">종료</span></div></div>`;
+    try {
+      const [finRes, schRes] = await Promise.all([
+        fetch(`${FD_BASE}/competitions/PL/matches?status=FINISHED&limit=5`, { headers: { 'X-Auth-Token': FD_KEY } }),
+        fetch(`${FD_BASE}/competitions/PL/matches?status=SCHEDULED&limit=5`, { headers: { 'X-Auth-Token': FD_KEY } }),
+      ]);
+      const fin = finRes.ok ? (await finRes.json()).matches : [];
+      const sch = schRes.ok ? (await schRes.json()).matches : [];
+      let html = '';
+      if (fin.length) {
+        html += '<div style="font-size:10px;color:#9ca3af;font-weight:600;padding:6px 14px 2px">최근 결과</div>';
+        html += fin.slice(-3).reverse().map(m => `
+          <div class="match-row">
+            <div class="match-league">EPL</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>${kr(m.homeTeam.name)}</span>
+                <span class="score-val">${m.score.fullTime.home} - ${m.score.fullTime.away}</span>
+                <span>${kr(m.awayTeam.name)}</span>
+              </div>
+              <span class="time-badge badge-end">종료</span>
+            </div>
+          </div>`).join('');
+      }
+      if (sch.length) {
+        html += '<div style="font-size:10px;color:#9ca3af;font-weight:600;padding:6px 14px 2px">예정 경기</div>';
+        html += sch.slice(0, 2).map(m => {
+          const d = new Date(m.utcDate);
+          const t = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+          return `
+          <div class="match-row">
+            <div class="match-league">EPL</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>${kr(m.homeTeam.name)}</span>
+                <span class="score-val" style="font-size:11px;color:#9ca3af">vs</span>
+                <span>${kr(m.awayTeam.name)}</span>
+              </div>
+              <span class="time-badge badge-soon">${t}</span>
+            </div>
+          </div>`;
+        }).join('');
+      }
+      el.innerHTML = html || fallback;
+    } catch (e) {
+      el.innerHTML = fallback;
+      console.warn('EPL matches 오류:', e);
+    }
+  }
+
+  /* 챔피언스리그 최근 경기 */
+  async function loadCLMatches() {
+    const el = document.getElementById('cl-matches-body');
+    try {
+      const res = await fetch(`${FD_BASE}/competitions/CL/matches?status=FINISHED&limit=3`, {
+        headers: { 'X-Auth-Token': FD_KEY }
+      });
+      if (!res.ok) throw new Error(res.status);
+      const { matches } = await res.json();
+      if (!matches.length) throw new Error('no matches');
+      el.innerHTML = matches.slice(-3).reverse().map(m => `
+        <div class="match-row">
+          <div class="match-league">UCL</div>
+          <div class="match-score">
+            <div class="match-teams">
+              <span>${kr(m.homeTeam.name)}</span>
+              <span class="score-val">${m.score.fullTime.home} - ${m.score.fullTime.away}</span>
+              <span>${kr(m.awayTeam.name)}</span>
+            </div>
+            <span class="time-badge badge-end">종료</span>
+          </div>
+        </div>`).join('');
+    } catch (e) {
+      el.innerHTML = '<div style="padding:12px 14px;text-align:center;color:#9ca3af;font-size:11px">데이터를 불러올 수 없습니다</div>';
+      console.warn('CL matches 오류:', e);
+    }
+  }
+
+  /* 페이지 로드 시 자동 호출 */
+  document.addEventListener('DOMContentLoaded', () => {
+    loadStandings();
+    loadMatches();
+    loadCLMatches();
+  });
 
   /* Tab switching */
   const pageMap = {
