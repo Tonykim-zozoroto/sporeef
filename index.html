@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sporeef — Your daily sports briefing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f5f5f5;
+      color: #111827;
+      font-size: 14px;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: #16a34a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .logo-box {
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-box svg { width: 20px; height: 20px; fill: #fff; }
+
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { color: #fff; font-size: 18px; font-weight: 700; line-height: 1.1; letter-spacing: -0.3px; }
+    .logo-tagline { color: rgba(255,255,255,0.65); font-size: 10px; font-weight: 400; }
+
+    .search-wrap {
+      flex: 1;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 7px 14px;
+      color: #fff;
+      font-size: 13px;
+      font-family: 'Noto Sans KR', sans-serif;
+      outline: none;
+    }
+
+    .search-wrap input::placeholder { color: rgba(255,255,255,0.55); }
+    .search-wrap input:focus { border-color: rgba(255,255,255,0.7); }
+
+    .nav-tabs {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .nav-tabs button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 10px;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: color 0.15s;
+      position: relative;
+    }
+
+    .nav-tabs button.active {
+      color: #fff;
+    }
+
+    .nav-tabs button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 6px;
+      right: 6px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .nav-tabs button:hover { color: #fff; }
+
+    .new-badge {
+      display: inline-block;
+      background: #ef4444;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-left: 3px;
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+
+    /* ─── LEAGUE BAR ─── */
+    .league-bar {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .league-bar::-webkit-scrollbar { display: none; }
+
+    .league-bar button {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      margin: 6px 0;
+    }
+
+    .league-bar button.active {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    .league-bar button:hover:not(.active) { border-color: #22c55e; color: #22c55e; }
+
+    .league-divider {
+      width: 1px;
+      height: 20px;
+      background: #e5e7eb;
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
+
+    .league-bar .wc-btn {
+      color: #16a34a;
+      border-color: #bbf7d0;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 14px; }
+
+    /* World Cup Banner */
+    .wc-banner {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .wc-banner-left { display: flex; align-items: center; gap: 12px; }
+    .wc-icon { font-size: 28px; }
+
+    .wc-banner h3 { font-size: 15px; font-weight: 700; color: #111827; }
+    .wc-banner p { font-size: 12px; color: #6b7280; margin-top: 2px; }
+
+    .d-badge {
+      background: #22c55e;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    /* 3-column grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 300px;
+      gap: 14px;
+    }
+
+    .col-left, .col-mid { display: flex; flex-direction: column; gap: 14px; }
+
+    /* Cards */
+    .card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .card-link {
+      font-size: 12px;
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .card-link:hover { text-decoration: underline; }
+
+    .card-body { padding: 12px 14px; }
+
+    /* Scorer Table */
+    .scorer-cols {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0 12px;
+      font-size: 11px;
+      color: #9ca3af;
+      font-weight: 600;
+      padding: 0 0 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 6px;
+    }
+
+    .scorer-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0 10px;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid #fafafa;
+    }
+
+    .scorer-row:last-child { border-bottom: none; }
+
+    .rank {
+      width: 18px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #22c55e;
+    }
+
+    .scorer-info { min-width: 0; }
+    .scorer-name { font-weight: 600; font-size: 13px; color: #111827; }
+    .scorer-team { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+
+    .scorer-right { text-align: right; flex-shrink: 0; }
+    .scorer-goals { font-weight: 700; font-size: 14px; color: #111827; }
+    .scorer-xg { font-size: 11px; color: #9ca3af; }
+
+    .bar-wrap { margin-top: 4px; }
+    .bar-bg { background: #f0f0f0; border-radius: 3px; height: 4px; }
+    .bar-fill { background: #22c55e; height: 4px; border-radius: 3px; transition: width 0.3s; }
+
+    /* Player Card */
+    .player-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #fafafa;
+    }
+
+    .player-row:last-child { border-bottom: none; }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .player-info { flex: 1; min-width: 0; }
+    .player-name { font-weight: 600; font-size: 13px; color: #111827; }
+    .player-team { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+    .player-stats { font-size: 11px; color: #6b7280; margin-top: 3px; }
+
+    .rating-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* xG Table */
+    .xg-header {
+      display: grid;
+      grid-template-columns: 20px 1fr 56px 56px 60px;
+      gap: 0 8px;
+      font-size: 10px;
+      color: #9ca3af;
+      font-weight: 600;
+      padding: 0 14px 6px;
+      border-bottom: 1px solid #f0f0f0;
+      margin: 0 0 0 0;
+    }
+
+    .xg-row {
+      display: grid;
+      grid-template-columns: 20px 1fr 56px 56px 60px;
+      gap: 0 8px;
+      align-items: center;
+      padding: 7px 14px;
+      border-bottom: 1px solid #fafafa;
+      font-size: 12px;
+    }
+
+    .xg-row:last-child { border-bottom: none; }
+
+    .xg-rank { color: #9ca3af; font-weight: 600; text-align: center; }
+    .xg-team { font-weight: 600; color: #111827; }
+    .xg-val { font-weight: 600; }
+    .xg-green { color: #22c55e; }
+    .xg-red { color: #ef4444; }
+
+    /* AI Card */
+    .ai-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #f0fdf4;
+      border-bottom: 1px solid #dcfce7;
+    }
+
+    .ai-title { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: #111827; }
+
+    .ai-icon-box {
+      background: #22c55e;
+      border-radius: 6px;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .topic-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .pill {
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+      background: #fff;
+      color: #6b7280;
+      transition: all 0.15s;
+    }
+
+    .pill.active { background: #22c55e; border-color: #22c55e; color: #fff; }
+    .pill:hover:not(.active) { border-color: #22c55e; color: #22c55e; }
+
+    .ai-output {
+      padding: 12px 14px;
+      background: #fafafa;
+      min-height: 90px;
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .ai-btn {
+      margin: 10px 14px 14px;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      display: block;
+      width: calc(100% - 28px);
+      text-align: center;
+      transition: background 0.15s;
+    }
+
+    .ai-btn:hover { background: #15803d; }
+    .ai-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+
+    /* Sidebar */
+    .sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+    /* Live Score */
+    .match-row {
+      padding: 8px 14px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .match-row:last-child { border-bottom: none; }
+
+    .match-league { font-size: 10px; color: #9ca3af; margin-bottom: 5px; font-weight: 500; }
+
+    .match-score {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .match-teams { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+
+    .score-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .time-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .badge-live { background: #fef2f2; color: #ef4444; }
+    .badge-end { background: #f3f4f6; color: #9ca3af; }
+    .badge-soon { background: #eff6ff; color: #3b82f6; }
+
+    .live-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+      margin-right: 3px;
+      vertical-align: middle;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    /* Transfer */
+    .transfer-row {
+      padding: 8px 14px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .transfer-row:last-child { border-bottom: none; }
+
+    .transfer-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+    .transfer-name { font-weight: 600; font-size: 13px; color: #111827; }
+
+    .status-pill {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    .sp-red { background: #fef2f2; color: #ef4444; }
+    .sp-yellow { background: #fffbeb; color: #d97706; }
+    .sp-green { background: #f0fdf4; color: #16a34a; }
+
+    .transfer-detail { font-size: 12px; color: #6b7280; }
+    .transfer-source { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+    .stars { color: #f59e0b; }
+
+    /* Key Metrics */
+    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px 14px 14px; }
+
+    .metric-card {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .metric-label { font-size: 10px; color: #9ca3af; font-weight: 500; margin-bottom: 4px; }
+    .metric-name { font-size: 12px; font-weight: 700; color: #111827; }
+    .metric-val { font-size: 11px; color: #6b7280; margin-top: 1px; }
+    .metric-bar-bg { background: #e5e7eb; border-radius: 2px; height: 4px; margin-top: 6px; }
+    .metric-bar-fill { background: #22c55e; height: 4px; border-radius: 2px; }
+
+    /* Live badge in header */
+    .live-hdr-badge {
+      background: #ef4444;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* Footer */
+    footer {
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+
+    .footer-logo { display: flex; align-items: center; gap: 7px; }
+    .footer-logo-name { font-weight: 700; color: #16a34a; font-size: 15px; }
+    .footer-source { font-size: 11px; color: #9ca3af; }
+
+    /* Other pages placeholder */
+    .page-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: #9ca3af;
+      font-size: 15px;
+      gap: 10px;
+    }
+
+    .page-placeholder span { font-size: 36px; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .sidebar { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .header-top { flex-wrap: wrap; gap: 8px; }
+      .search-wrap { order: 3; max-width: 100%; }
+      .nav-tabs { overflow-x: auto; scrollbar-width: none; }
+      .nav-tabs::-webkit-scrollbar { display: none; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .sidebar { display: flex; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-top">
+    <a class="logo" href="#">
+      <div class="logo-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 21c.5-4.5 2.5-8 7-10"/>
+          <path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Sporeef</span>
+        <span class="logo-tagline">Your daily sports briefing</span>
+      </div>
+    </a>
+
+    <div class="search-wrap">
+      <input type="text" placeholder="선수, 팀, 리그 검색..." />
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="active" onclick="switchTab('home', this)">홈</button>
+      <button onclick="switchTab('player', this)">선수 지표</button>
+      <button onclick="switchTab('team', this)">팀 분석</button>
+      <button onclick="switchTab('transfer', this)">이적시장</button>
+      <button onclick="switchTab('worldcup', this)">월드컵 <span class="new-badge">NEW</span></button>
+      <button onclick="switchTab('ai', this)">AI 분석</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── LEAGUE BAR ─── -->
+<div class="league-bar">
+  <button class="active" onclick="selectLeague(this)">전체</button>
+  <button onclick="selectLeague(this)">프리미어리그</button>
+  <button onclick="selectLeague(this)">라리가</button>
+  <button onclick="selectLeague(this)">분데스리가</button>
+  <button onclick="selectLeague(this)">세리에A</button>
+  <button onclick="selectLeague(this)">리그1</button>
+  <div class="league-divider"></div>
+  <button onclick="selectLeague(this)">챔피언스리그</button>
+  <button onclick="selectLeague(this)">유로파리그</button>
+  <div class="league-divider"></div>
+  <button class="wc-btn" onclick="selectLeague(this)">🏆 월드컵 2026</button>
+</div>
+
+<!-- ═══════════════════════════════════ HOME PAGE ═══════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="container">
+
+    <!-- World Cup Banner -->
+    <div class="wc-banner">
+      <div class="wc-banner-left">
+        <div class="wc-icon">🏆</div>
+        <div>
+          <h3>FIFA 월드컵 2026 — 북중미 공동 개최</h3>
+          <p>미국 · 캐나다 · 멕시코 공동 개최 | 48개국 참가 | 2026년 6월 11일 개막</p>
+        </div>
+      </div>
+      <div class="d-badge">D-16</div>
+    </div>
+
+    <!-- 3-column grid -->
+    <div class="grid-3">
+
+      <!-- ── LEFT COLUMN ── -->
+      <div class="col-left">
+
+        <!-- 득점순위 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>득점 순위 — 유럽 5대 리그</div>
+            <a href="#" class="card-link">전체 보기 ›</a>
+          </div>
+          <div class="card-body">
+            <div class="scorer-cols">
+              <span>선수 / 팀</span>
+              <span style="text-align:center">시즌 기록</span>
+              <span>골 / xG</span>
+            </div>
+
+            <div class="scorer-row">
+              <div class="rank">1</div>
+              <div class="scorer-info">
+                <div class="scorer-name">에를링 홀란드</div>
+                <div class="scorer-team">맨체스터 시티 · EPL</div>
+                <div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div></div>
+              </div>
+              <div class="scorer-right">
+                <div class="scorer-goals">28골</div>
+                <div class="scorer-xg">xG 24.3</div>
+              </div>
+            </div>
+
+            <div class="scorer-row">
+              <div class="rank">2</div>
+              <div class="scorer-info">
+                <div class="scorer-name">킬리안 음바페</div>
+                <div class="scorer-team">PSG · 리그1</div>
+                <div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:89%"></div></div></div>
+              </div>
+              <div class="scorer-right">
+                <div class="scorer-goals">25골</div>
+                <div class="scorer-xg">xG 21.1</div>
+              </div>
+            </div>
+
+            <div class="scorer-row">
+              <div class="rank">3</div>
+              <div class="scorer-info">
+                <div class="scorer-name">로베르트 레반도프스키</div>
+                <div class="scorer-team">바르셀로나 · 라리가</div>
+                <div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:82%"></div></div></div>
+              </div>
+              <div class="scorer-right">
+                <div class="scorer-goals">23골</div>
+                <div class="scorer-xg">xG 20.5</div>
+              </div>
+            </div>
+
+            <div class="scorer-row">
+              <div class="rank">4</div>
+              <div class="scorer-info">
+                <div class="scorer-name">모하메드 살라</div>
+                <div class="scorer-team">리버풀 · EPL</div>
+                <div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:79%"></div></div></div>
+              </div>
+              <div class="scorer-right">
+                <div class="scorer-goals">22골</div>
+                <div class="scorer-xg">xG 18.7</div>
+              </div>
+            </div>
+
+            <div class="scorer-row">
+              <div class="rank">5</div>
+              <div class="scorer-info">
+                <div class="scorer-name">빅터 오시멘</div>
+                <div class="scorer-team">나폴리 · 세리에A</div>
+                <div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:71%"></div></div></div>
+              </div>
+              <div class="scorer-right">
+                <div class="scorer-goals">20골</div>
+                <div class="scorer-xg">xG 17.2</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 주목선수 AI 지표 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>주목 선수 — AI 지표 분석</div>
+            <a href="#" class="card-link">상세 보기 ›</a>
+          </div>
+          <div class="card-body">
+            <div class="player-row">
+              <div class="avatar" style="background:#16a34a">JB</div>
+              <div class="player-info">
+                <div class="player-name">주드 벨링엄</div>
+                <div class="player-team">레알 마드리드 · 라리가</div>
+                <div class="player-stats">xG 0.42 · 키패스 3.8 · 패스성공 89%</div>
+              </div>
+              <div class="rating-circle" style="background:#22c55e">8.4</div>
+            </div>
+            <div class="player-row">
+              <div class="avatar" style="background:#3b82f6">손흥</div>
+              <div class="player-info">
+                <div class="player-name">손흥민</div>
+                <div class="player-team">토트넘 · EPL</div>
+                <div class="player-stats">xG 0.38 · 키패스 4.1 · 패스성공 85%</div>
+              </div>
+              <div class="rating-circle" style="background:#3b82f6">7.9</div>
+            </div>
+            <div class="player-row">
+              <div class="avatar" style="background:#f59e0b">VJ</div>
+              <div class="player-info">
+                <div class="player-name">비니시우스 주니오르</div>
+                <div class="player-team">레알 마드리드 · 라리가</div>
+                <div class="player-stats">xG 0.51 · 키패스 3.2 · 패스성공 82%</div>
+              </div>
+              <div class="rating-circle" style="background:#f59e0b">8.7</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /col-left -->
+
+      <!-- ── MID COLUMN ── -->
+      <div class="col-mid">
+
+        <!-- 팀 xG 현황 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>팀 xG 현황 — EPL</div>
+            <a href="#" class="card-link">전체 리그 ›</a>
+          </div>
+
+          <div style="display:grid;grid-template-columns:20px 1fr 56px 56px 80px;gap:0 8px;font-size:10px;color:#9ca3af;font-weight:600;padding:8px 14px 6px;border-bottom:1px solid #f0f0f0">
+            <span>#</span><span>팀</span><span style="color:#22c55e">xG</span><span style="color:#ef4444">xGA</span><span></span>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">1</span>
+            <span class="xg-team">맨체스터 시티</span>
+            <span class="xg-val xg-green">68.4</span>
+            <span class="xg-val xg-red">28.1</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:100%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:41%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">2</span>
+            <span class="xg-team">아스날</span>
+            <span class="xg-val xg-green">64.2</span>
+            <span class="xg-val xg-red">24.3</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:94%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:35%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">3</span>
+            <span class="xg-team">리버풀</span>
+            <span class="xg-val xg-green">61.8</span>
+            <span class="xg-val xg-red">30.2</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:90%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:44%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">4</span>
+            <span class="xg-team">첼시</span>
+            <span class="xg-val xg-green">52.1</span>
+            <span class="xg-val xg-red">38.4</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:76%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:56%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">5</span>
+            <span class="xg-team">토트넘</span>
+            <span class="xg-val xg-green">49.3</span>
+            <span class="xg-val xg-red">42.1</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:72%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:62%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="xg-row">
+            <span class="xg-rank">6</span>
+            <span class="xg-team">뉴캐슬</span>
+            <span class="xg-val xg-green">46.8</span>
+            <span class="xg-val xg-red">40.3</span>
+            <div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="background:#22c55e;height:5px;border-radius:2px;width:68%"></div>
+                <div style="background:#ef4444;height:5px;border-radius:2px;width:59%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI 분석 -->
+        <div class="card">
+          <div class="ai-card-header">
+            <div class="ai-title">
+              <div class="ai-icon-box">✦</div>
+              AI 분석
+            </div>
+            <span style="font-size:11px;color:#6b7280">Claude AI 기반</span>
+          </div>
+
+          <div class="topic-pills" id="topic-pills">
+            <button class="pill active" onclick="selectTopic(this, '이번 주 핵심 지표')">이번 주 핵심 지표</button>
+            <button class="pill" onclick="selectTopic(this, '우승 경쟁 분석')">우승 경쟁 분석</button>
+            <button class="pill" onclick="selectTopic(this, '이적 시장 동향')">이적 시장 동향</button>
+            <button class="pill" onclick="selectTopic(this, '한국 선수 분석')">한국 선수 분석</button>
+            <button class="pill" onclick="selectTopic(this, '월드컵 전망')">월드컵 전망</button>
+          </div>
+
+          <div class="ai-output" id="ai-output">주제를 선택하고 분석 버튼을 눌러주세요.</div>
+
+          <button class="ai-btn" id="ai-btn" onclick="runAI()">✦ AI 분석 생성 ↗</button>
+        </div>
+
+      </div><!-- /col-mid -->
+
+      <!-- ── SIDEBAR ── -->
+      <div class="sidebar">
+
+        <!-- 라이브스코어 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>라이브 스코어</div>
+            <span class="live-hdr-badge"><span class="live-dot"></span>LIVE</span>
+          </div>
+
+          <div class="match-row">
+            <div class="match-league">EPL 38R</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>맨시티</span>
+                <span class="score-val">2 - 1</span>
+                <span>아스날</span>
+              </div>
+              <span class="time-badge badge-live">74'</span>
+            </div>
+          </div>
+
+          <div class="match-row">
+            <div class="match-league">라리가 38R</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>바르셀로나</span>
+                <span class="score-val">1 - 1</span>
+                <span>아틀레티코</span>
+              </div>
+              <span class="time-badge badge-live">63'</span>
+            </div>
+          </div>
+
+          <div class="match-row">
+            <div class="match-league">분데스리가 34R</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>바이에른</span>
+                <span class="score-val">3 - 1</span>
+                <span>도르트문트</span>
+              </div>
+              <span class="time-badge badge-end">종료</span>
+            </div>
+          </div>
+
+          <div class="match-row">
+            <div class="match-league">세리에A 38R</div>
+            <div class="match-score">
+              <div class="match-teams">
+                <span>인터밀란</span>
+                <span class="score-val" style="font-size:12px;color:#9ca3af">vs</span>
+                <span>AC밀란</span>
+              </div>
+              <span class="time-badge badge-soon">22:45</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 이적속보 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>이적 속보</div>
+            <a href="#" class="card-link">전체 ›</a>
+          </div>
+
+          <div class="transfer-row">
+            <div class="transfer-top">
+              <span class="transfer-name">킬리안 음바페</span>
+              <span class="status-pill sp-red">협상중</span>
+            </div>
+            <div class="transfer-detail">PSG → 맨유 £180M</div>
+            <div class="transfer-source">Fabrizio Romano · <span class="stars">★★★★</span></div>
+          </div>
+
+          <div class="transfer-row">
+            <div class="transfer-top">
+              <span class="transfer-name">손흥민</span>
+              <span class="status-pill sp-yellow">접촉중</span>
+            </div>
+            <div class="transfer-detail">토트넘 재계약 · 바르셀로나 관심</div>
+            <div class="transfer-source">The Athletic · <span class="stars">★★★</span></div>
+          </div>
+
+          <div class="transfer-row">
+            <div class="transfer-top">
+              <span class="transfer-name">빅터 오시멘</span>
+              <span class="status-pill sp-green">완료</span>
+            </div>
+            <div class="transfer-detail">나폴리 → 첼시 £75M</div>
+            <div class="transfer-source">Sky Sports</div>
+          </div>
+
+          <div class="transfer-row">
+            <div class="transfer-top">
+              <span class="transfer-name">황희찬</span>
+              <span class="status-pill sp-yellow">이적설</span>
+            </div>
+            <div class="transfer-detail">울버햄튼 → 아틀레티코</div>
+            <div class="transfer-source">ESPN FC · <span class="stars">★★★</span></div>
+          </div>
+        </div>
+
+        <!-- 핵심지표 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>핵심 지표</div>
+          </div>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-label">xG 리더</div>
+              <div class="metric-name">홀란드</div>
+              <div class="metric-val">24.3 xG · EPL</div>
+              <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:100%"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">압박 강도</div>
+              <div class="metric-name">맨체스터 시티</div>
+              <div class="metric-val">PPDA 7.2</div>
+              <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:92%"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">키패스 1위</div>
+              <div class="metric-name">벨링엄</div>
+              <div class="metric-val">4.8 / 90분</div>
+              <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:88%"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">점유율 1위</div>
+              <div class="metric-name">바르셀로나</div>
+              <div class="metric-val">시즌 평균 68%</div>
+              <div class="metric-bar-bg"><div class="metric-bar-fill" style="width:85%"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sidebar -->
+
+    </div><!-- /grid-3 -->
+  </div>
+</div>
+
+<!-- ═══════════ OTHER PAGES ═══════════ -->
+<div id="page-player" class="page">
+  <div class="container">
+    <div class="page-placeholder"><span>📊</span><p>선수 지표 페이지 — 준비 중</p></div>
+  </div>
+</div>
+
+<div id="page-team" class="page">
+  <div class="container">
+    <div class="page-placeholder"><span>🛡️</span><p>팀 분석 페이지 — 준비 중</p></div>
+  </div>
+</div>
+
+<div id="page-transfer" class="page">
+  <div class="container">
+    <div class="page-placeholder"><span>🔄</span><p>이적시장 페이지 — 준비 중</p></div>
+  </div>
+</div>
+
+<div id="page-worldcup" class="page">
+  <div class="container">
+    <div class="page-placeholder"><span>🏆</span><p>월드컵 2026 페이지 — 준비 중</p></div>
+  </div>
+</div>
+
+<div id="page-ai" class="page">
+  <div class="container">
+    <div class="page-placeholder"><span>✦</span><p>AI 분석 전용 페이지 — 준비 중</p></div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">
+    <span style="color:#22c55e;font-size:16px">🌿</span>
+    <span class="footer-logo-name">Sporeef</span>
+  </div>
+  <div class="footer-source">데이터 출처: FBref · Understat · Transfermarkt · Fabrizio Romano</div>
+</footer>
+
+<!-- ─── JAVASCRIPT ─── -->
+<script>
+  /* API Key — 사용 전 여기에 입력 */
+  const API_KEY = '';
+
+  /* Tab switching */
+  const pageMap = {
+    home: 'page-home',
+    player: 'page-player',
+    team: 'page-team',
+    transfer: 'page-transfer',
+    worldcup: 'page-worldcup',
+    ai: 'page-ai',
+  };
+
+  function switchTab(key, btn) {
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageMap[key]).classList.add('active');
+  }
+
+  /* League bar */
+  function selectLeague(btn) {
+    document.querySelectorAll('.league-bar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* AI topic pills */
+  let currentTopic = '이번 주 핵심 지표';
+
+  function selectTopic(btn, topic) {
+    document.querySelectorAll('#topic-pills .pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    currentTopic = topic;
+    document.getElementById('ai-output').textContent = '주제를 선택하고 분석 버튼을 눌러주세요.';
+  }
+
+  /* AI analysis */
+  async function runAI() {
+    if (!API_KEY) {
+      document.getElementById('ai-output').textContent =
+        '⚠️ API_KEY가 설정되지 않았습니다.\n코드 상단의 const API_KEY = \'\' 에 Anthropic API 키를 입력해주세요.';
+      return;
+    }
+
+    const btn = document.getElementById('ai-btn');
+    const output = document.getElementById('ai-output');
+    btn.disabled = true;
+    btn.textContent = '✦ 분석 중...';
+    output.textContent = '⏳ AI가 최신 정보를 검색하고 분석 중입니다...';
+
+    const prompts = {
+      '이번 주 핵심 지표': '이번 주 유럽 축구 5대 리그의 핵심 통계 지표(xG, 압박강도, 패스 성공률 등)를 분석해주세요. 최신 경기 데이터를 웹에서 검색해서 한국어로 간결하게 요약해주세요.',
+      '우승 경쟁 분석': '현재 EPL 우승 경쟁 상황을 분석해주세요. 최신 순위와 잔여 일정, 각 팀의 강점/약점을 웹 검색으로 확인해서 한국어로 요약해주세요.',
+      '이적 시장 동향': '최신 이적시장 루머와 완료된 이적 소식을 웹에서 검색해서 한국어로 요약해주세요. Fabrizio Romano 등 신뢰도 높은 소스 위주로 정리해주세요.',
+      '한국 선수 분석': '손흥민, 황희찬, 이강인 등 유럽에서 활동하는 한국 선수들의 최근 성적과 동향을 웹에서 검색해서 한국어로 분석해주세요.',
+      '월드컵 전망': '2026 FIFA 월드컵을 앞두고 한국 대표팀의 현황과 우승 후보팀 전망을 최신 정보 기반으로 한국어로 분석해주세요.',
+    };
+
+    const userPrompt = prompts[currentTopic] || `${currentTopic}에 대해 최신 정보를 검색해서 한국어로 분석해주세요.`;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      const textBlock = data.content?.find(b => b.type === 'text');
+      output.textContent = textBlock ? textBlock.text : '응답을 받았으나 텍스트 블록이 없습니다.';
+    } catch (e) {
+      output.textContent = `오류: ${e.message}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '✦ AI 분석 생성 ↗';
+    }
+  }
+</script>
+</body>
+</html>
